@@ -8,7 +8,7 @@ const port = 8080;
 app.use(express.json())
 
 app.use(indexRoutes);
-app.use(employeesRoutes);
+app.use('/api', employeesRoutes);
 
 app.listen(port, () => {
     console.log(`Server running on port ${port}`)
