@@ -1,10 +1,18 @@
+import {pool} from '../db.js'
+
 
 const getEmployees = (req, res) => {
     res.send('Obteniendo empleados')
 }
 
-const createEmployees = (req, res) => {
-    res.send('Creando empleados')
+const createEmployees = async(req, res) => {
+    const { name, salary } = req.body;
+    const [rows] = await pool.query('INSERT INTO employee (name, salary) VALUES (?, ?)', [name, salary])
+    res.send({
+        id: rows.insertId,
+        name,
+        salary
+    })
 }
 
 const updateEmployees = (req, res) => {
