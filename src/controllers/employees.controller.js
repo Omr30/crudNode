@@ -29,8 +29,13 @@ const updateEmployees = (req, res) => {
     res.send('Actualizando empleados')
 }
 
-const deleteEmployees = (req, res) => {
-    res.send('Eliminando empleados')
+const deleteEmployees = async(req, res) => {
+    const {id} = req.params;
+    const [result] = await pool.query(`DELETE FROM employee WHERE id = ${id}`)
+    if(result.affectedRows <= 0)return res.status(404).json({
+        message: 'Employee not fount'
+    }) 
+    res.sendStatus(204);
 }
 
 export {
